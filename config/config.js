@@ -1,0 +1,19 @@
+/**
+ * 
+ * paste in command line.
+$env:DB_NAME="blogDB"
+$env:DB_USER="root"
+$env:DB_PASSWORD="Psprsx66"
+$env:DB_HOST="127.0.0.1"
+$env:DB_PORT="3306"
+ *
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */

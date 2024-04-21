@@ -1,28 +1,17 @@
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('./index');
-const User = require('./User');
-const Post = require('./Post');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../db/db');
+const User = require('./user');
+const Post = require('./post');
 
-class Comment extends Model {}
-
-Comment.init({
-    id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    },
-    content: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    }
-}, {
-    sequelize,
-    modelName: 'Comment',
-    timestamps: true
+const Comment = sequelize.define('Comment', {
+  text: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  }
 });
 
 
-Comment.belongsTo(User, { foreignKey: 'userId', as: 'user' });
-Comment.belongsTo(Post, { foreignKey: 'postId', as: 'post' });
+Comment.belongsTo(User, { foreignKey: 'UserId', onDelete: 'CASCADE' });
+Comment.belongsTo(Post, { foreignKey: 'PostId', onDelete: 'CASCADE' });
 
 module.exports = Comment;

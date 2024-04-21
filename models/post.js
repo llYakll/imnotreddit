@@ -1,4 +1,4 @@
-// post.js
+
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db/db');
 const User = require('./user');

@@ -1,0 +1,18 @@
+<h1>{{title}}</h1>
+<p>Created by: {{user.username}} on {{createdAt}}</p>
+<p>{{content}}</p>
+
+{{#if logged_in}}
+  <form id="comment-form">
+    <textarea name="comment_text" placeholder="Leave a comment"></textarea>
+    <button type="submit">Submit</button>
+  </form>
+{{else}}
+  <p>Please log in to leave a comment.</p>
+{{/if}}
+
+{{#each comments}}
+  <div>
+    <p>{{comment_text}} - {{user.username}} on {{createdAt}}</p>
+  </div>
+{{/each}}

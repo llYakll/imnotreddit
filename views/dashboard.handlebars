@@ -1,0 +1,10 @@
+<h1>Dashboard</h1>
+<button id="new-post">New Post</button>
+{{#each posts}}
+  <div>
+    <h2>{{title}}</h2>
+    <p>{{content}}</p>
+    <button class="edit-post" data-id="{{id}}">Edit</button>
+    <button class="delete-post" data-id="{{id}}">Delete</button>
+  </div>
+{{/each}}

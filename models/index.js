@@ -1,6 +1,3 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../config/connection');
-
 const User = require('./User');
 const Post = require('./Post');
 const Comment = require('./Comment');
@@ -32,4 +29,4 @@ Comment.belongsTo(Post, {
   foreignKey: 'post_id'
 });
 
-module.exports = { User, Post, Comment, sequelize };
+module.exports = { User, Post, Comment };

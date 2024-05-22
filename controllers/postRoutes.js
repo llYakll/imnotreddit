@@ -1,8 +1,8 @@
+const express = require('express');
+const postRoutes = express.Router();
+const { Post, User, Comment } = require('../models');
 
-const postRoutes = require('express').Router();
-const Comment = require('../models/Comment');
-const Post = require('../models/Post')
-
+// create a new post
 postRoutes.post('/', async (req, res) => {
   try {
     const newPost = await Post.create({
@@ -16,6 +16,25 @@ postRoutes.post('/', async (req, res) => {
   }
 });
 
+// get all posts with user information
+postRoutes.get('/', async (req, res) => {
+  try {
+    const posts = await Post.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+      ],
+    });
+
+    res.status(200).json(posts);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// update a post
 postRoutes.put('/:id', async (req, res) => {
   try {
     const updatedPost = await Post.update(req.body, {
@@ -31,6 +50,7 @@ postRoutes.put('/:id', async (req, res) => {
   }
 });
 
+// delete a post
 postRoutes.delete('/:id', async (req, res) => {
   try {
     const postData = await Post.destroy({

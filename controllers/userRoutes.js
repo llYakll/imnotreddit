@@ -2,9 +2,12 @@ const express = require('express');
 const userRoutes = express.Router();
 const { User } = require('../models');
 
-userRoutes.post('/users/signup', async (req, res) => {
+userRoutes.post('/signup', async (req, res) => {
   try {
     const { username, email, password } = req.body;
+
+    console.log({ username, email, password });
+
     if (!username || !email || !password) {
       return res.status(400).json({ message: 'All fields are required.' });
     }
@@ -25,7 +28,7 @@ userRoutes.post('/users/signup', async (req, res) => {
   }
 });
 
-userRoutes.post('/users/login', async (req, res) => {
+userRoutes.post('/login', async (req, res) => {
   try {
     const userData = await User.findOne({ where: { username: req.body.username } });
 
@@ -53,7 +56,7 @@ userRoutes.post('/users/login', async (req, res) => {
   }
 });
 
-userRoutes.post('/users/logout', (req, res) => {
+userRoutes.post('/logout', (req, res) => {
   if (req.session.logged_in) {
     req.session.destroy(() => {
       res.status(204).end();

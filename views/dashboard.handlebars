@@ -1,10 +1,20 @@
 <h1>Dashboard</h1>
 <button id="new-post">New Post</button>
-{{#each posts}}
-  <div>
-    <h2>{{title}}</h2>
-    <p>{{content}}</p>
-    <button class="edit-post" data-id="{{id}}">Edit</button>
-    <button class="delete-post" data-id="{{id}}">Delete</button>
-  </div>
-{{/each}}
+
+<form id="new-post-form" style="display: none;">
+  <input type="text" id="post-title" name="title" placeholder="Post Title" required>
+  <textarea id="post-content" name="content" placeholder="Write your post here..." required></textarea>
+  <button type="submit">Post</button>
+</form>
+
+<div id="posts-container">
+  {{#each posts}}
+    <div>
+      <h2>{{title}}</h2>
+      <p>{{content}}</p>
+      <p>Posted by: {{user.username}}</p> <!-- Display user info -->
+      <button class="edit-post" data-id="{{id}}">Edit</button>
+      <button class="delete-post" data-id="{{id}}">Delete</button>
+    </div>
+  {{/each}}
+</div>

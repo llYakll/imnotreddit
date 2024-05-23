@@ -2,7 +2,7 @@ const express = require('express');
 const postRoutes = express.Router();
 const { Post, User, Comment } = require('../models');
 
-// Create a new post
+// create a new post
 postRoutes.post('/', async (req, res) => {
   try {
     const newPost = await Post.create({
@@ -16,7 +16,7 @@ postRoutes.post('/', async (req, res) => {
   }
 });
 
-// Get all posts with user information
+// gets all posts with user information
 postRoutes.get('/', async (req, res) => {
   try {
     const posts = await Post.findAll({
@@ -34,7 +34,7 @@ postRoutes.get('/', async (req, res) => {
   }
 });
 
-// Get a single post with user and comments information
+// gets a single post with user and comments information
 postRoutes.get('/:id', async (req, res) => {
   try {
     const postData = await Post.findByPk(req.params.id, {
@@ -66,29 +66,46 @@ postRoutes.get('/:id', async (req, res) => {
   }
 });
 
-// Update a post
+
+// update post
 postRoutes.put('/:id', async (req, res) => {
   try {
-    const updatedPost = await Post.update(req.body, {
-      where: {
-        id: req.params.id,
-        user_id: req.session.user_id,
-      },
-    });
+    console.log('Request body:', req.body);
+    console.log('Session user ID:', req.session.user_id);
 
-    res.status(200).json(updatedPost);
+    // testing: in production decomment
+    // if (!req.session.user_id) {
+    //   return res.status(401).json({ message: 'You need to log in first' });
+    // }
+
+    const [affectedRows] = await Post.update(
+      { title: req.body.title, content: req.body.content },
+      {
+        where: {
+          id: req.params.id,
+          user_id: req.body.user_id, // Use user_id from request body
+        },
+      }
+    );
+
+    if (!affectedRows) {
+      res.status(404).json({ message: 'No post found with this id or you do not have permission to update this post!' });
+      return;
+    }
+
+    res.status(200).json({ message: 'Post updated successfully.' });
   } catch (err) {
+    console.error(err);
     res.status(400).json(err);
   }
 });
 
-// Delete a post
+// alt+f4 post
 postRoutes.delete('/:id', async (req, res) => {
   try {
     const postData = await Post.destroy({
       where: {
         id: req.params.id,
-        user_id: req.session.user_id,
       },
     });
 
@@ -97,7 +114,7 @@ postRoutes.delete('/:id', async (req, res) => {
       return;
     }
 
-    res.status(200).json(postData);
+    res.status(200).json({ message: 'Post deleted successfully.' });
   } catch (err) {
     res.status(500).json(err);
   }

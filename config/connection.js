@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
 require('dotenv').config();
 
-console.log('Database Host:', process.env.DB_HOST);  // Debugging line
-console.log('Database Name:', process.env.DB_NAME);  // Debugging line
-console.log('Database User:', process.env.DB_USER);  // Debugging line
+console.log('Database Host:', process.env.DB_HOST);  
+console.log('Database Name:', process.env.DB_NAME);  
+console.log('Database User:', process.env.DB_USER);  
 
 const sequelize = new Sequelize(
   process.env.DB_NAME,

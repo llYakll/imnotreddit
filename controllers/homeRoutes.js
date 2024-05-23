@@ -1,4 +1,3 @@
-
 const homeRoutes = require('express').Router();
 const { Post, Comment, User } = require('../models');
 
@@ -17,6 +16,7 @@ homeRoutes.get('/', async (req, res) => {
 
     res.render('home', {
       posts,
+      user: req.session.user,  // Pass user data to the template
       logged_in: req.session.logged_in,
     });
   } catch (err) {
@@ -43,6 +43,7 @@ homeRoutes.get('/post/:id', async (req, res) => {
 
     res.render('post', {
       ...post,
+      user: req.session.user,  // Pass user data to the template
       logged_in: req.session.logged_in,
     });
   } catch (err) {
@@ -87,6 +88,7 @@ homeRoutes.get('/dashboard', async (req, res) => {
     res.render('dashboard', {
       dashboard: true,
       posts,
+      user: req.session.user,  // Pass user data to the template
       logged_in: req.session.logged_in,
     });
   } catch (err) {

@@ -2,7 +2,7 @@ const express = require('express');
 const postRoutes = express.Router();
 const { Post, User, Comment } = require('../models');
 
-// create a new post
+// Create a new post
 postRoutes.post('/', async (req, res) => {
   try {
     const newPost = await Post.create({
@@ -16,7 +16,7 @@ postRoutes.post('/', async (req, res) => {
   }
 });
 
-// get all posts with user information
+// Get all posts with user information
 postRoutes.get('/', async (req, res) => {
   try {
     const posts = await Post.findAll({
@@ -34,7 +34,39 @@ postRoutes.get('/', async (req, res) => {
   }
 });
 
-// update a post
+// Get a single post with user and comments information
+postRoutes.get('/:id', async (req, res) => {
+  try {
+    const postData = await Post.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: ['username'],
+            },
+          ],
+        },
+      ],
+    });
+
+    if (!postData) {
+      res.status(404).json({ message: 'No post found with this id!' });
+      return;
+    }
+
+    res.status(200).json(postData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// Update a post
 postRoutes.put('/:id', async (req, res) => {
   try {
     const updatedPost = await Post.update(req.body, {
@@ -50,7 +82,7 @@ postRoutes.put('/:id', async (req, res) => {
   }
 });
 
-// delete a post
+// Delete a post
 postRoutes.delete('/:id', async (req, res) => {
   try {
     const postData = await Post.destroy({

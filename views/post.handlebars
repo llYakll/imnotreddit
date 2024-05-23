@@ -3,9 +3,10 @@
 <p>{{content}}</p>
 
 {{#if logged_in}}
-  <form id="comment-form">
+  <form id="comment-form" data-post-id="{{id}}">
     <textarea name="comment_text" placeholder="Leave a comment"></textarea>
     <button type="submit">Submit</button>
+    <div id="comment-message"></div>
   </form>
 {{else}}
   <p>Please log in to leave a comment.</p>

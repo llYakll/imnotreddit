@@ -16,7 +16,7 @@ homeRoutes.get('/', async (req, res) => {
 
     res.render('home', {
       posts,
-      user: req.session.user,  // Pass user data to the template
+      user: req.session.user,  
       logged_in: req.session.logged_in,
     });
   } catch (err) {
@@ -88,7 +88,7 @@ homeRoutes.get('/dashboard', async (req, res) => {
     res.render('dashboard', {
       dashboard: true,
       posts,
-      user: req.session.user,  // Pass user data to the template
+      user: req.session.user,  
       logged_in: req.session.logged_in,
     });
   } catch (err) {

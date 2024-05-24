@@ -1,3 +1,5 @@
+//again, i started testing then just quit.
+
 const sequelize = require('../db/db');
 const User = require('../models/User');
 const Post = require('../models/Post');
